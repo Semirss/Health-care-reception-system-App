@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_gradient"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="409dp"
+        android:layout_height="729dp"
+
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="1dp"
+        tools:ignore="MissingConstraints"
+        >
+
+        <TextView
+            android:id="@+id/appTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:letterSpacing="0.05"
+            android:text="HealthGate"
+            android:textColor="#1DCD9F"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="104dp"
+            tools:layout_editor_absoluteY="516dp" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="370dp"
+            android:layout_height="62dp"
+            android:text="Get Started"
+            android:textSize="25sp"
+            android:fontFamily="sans-serif-black"
+            android:textColor="#000"
+            android:backgroundTint="#ffffff"
+            tools:layout_editor_absoluteX="17dp"
+            tools:layout_editor_absoluteY="647dp" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Welcome to your personal health companion"
+            tools:layout_editor_absoluteX="65dp"
+            android:textColor="@color/white"
+            tools:layout_editor_absoluteY="589dp" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="397dp"
+            android:layout_height="527dp"
+            app:cardCornerRadius="40dp"
+            tools:layout_editor_absoluteX="-13dp"
+            tools:layout_editor_absoluteY="-25dp">
+
+            <ScrollView
+                android:layout_width="457dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/f">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+            </ScrollView>
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
