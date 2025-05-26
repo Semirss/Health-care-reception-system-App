@@ -7,6 +7,17 @@
     android:orientation="vertical"
     android:padding="16dp"
     android:background="#FAFAFA">
+    <!-- Add this inside your root layout, e.g. RelativeLayout or ConstraintLayout -->
+    <ImageView
+        android:id="@+id/logoutIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_logout"
+    android:contentDescription="Logout"
+    android:layout_alignParentEnd="true"
+    android:layout_margin="16dp"
+    android:clickable="true"
+    android:focusable="true"/>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardDoctor"

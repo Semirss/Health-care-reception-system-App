@@ -24,8 +24,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:cardCornerRadius="16dp"
-    android:cardElevation="8dp"
+
     android:backgroundTint="#222222"
     app:layout_constraintTop_toBottomOf="@id/headerText"
     app:layout_constraintStart_toStartOf="parent"

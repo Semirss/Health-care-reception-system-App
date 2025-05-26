@@ -22,6 +22,8 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
     private List<Patient> fullList;
     private List<Patient> filteredList;
     private final Context context;
+    private List<Patient> patientList;
+
     private final OnItemActionListener listener;
 
     public interface OnItemActionListener {
@@ -40,6 +42,11 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
     public void updateList(List<Patient> newList) {
         this.fullList = new ArrayList<>(newList);
         this.filteredList = new ArrayList<>(newList);
+        notifyDataSetChanged();
+    }
+    public void setPatients(List<Patient> patients) {
+        this.patientList.clear();
+        this.patientList.addAll(patients);
         notifyDataSetChanged();
     }
 
@@ -80,9 +87,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.patientName);
-            phone = itemView.findViewById(R.id.patientPhone);
-            delete = itemView.findViewById(R.id.deleteButton);
-            appointment = itemView.findViewById(R.id.addAppointmentButton);
+
         }
     }
 }

@@ -1,7 +1,5 @@
-<!-- res/layout/activity_admin_login.xml -->
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?><!-- res/layout/activity_admin_login.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:padding="32dp"
     android:gravity="center"
@@ -16,7 +14,7 @@
         android:textStyle="bold"
         android:layout_marginBottom="24dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
     <EditText
         android:id="@+id/etAdminName"
@@ -27,7 +25,7 @@
         android:backgroundTint="#FFFFFF"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="16dp" />
 
     <EditText
         android:id="@+id/etAdminPassword"
@@ -38,7 +36,7 @@
         android:backgroundTint="#FFFFFF"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"/>
+        android:layout_marginBottom="24dp" />
 
     <Button
         android:id="@+id/btnLogin"
@@ -47,7 +45,7 @@
         android:backgroundTint="#6200EE"
         android:textColor="#FFF"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
     <ProgressBar
         android:id="@+id/progressBar"
