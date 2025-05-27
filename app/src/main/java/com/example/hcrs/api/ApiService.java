@@ -5,12 +5,15 @@ package com.example.hcrs.api;
 import retrofit2.Call;
 import retrofit2.http.*;
 
+import com.example.hcrs.auth.LoginRequest;
 import com.example.hcrs.data.entities.Doctor;
 import java.util.List;
 
 import com.example.hcrs.data.entities.Receptionist;
+import com.example.hcrs.data.entities.User;
 import com.example.hcrs.wrapper.DoctorResponse;
 import com.example.hcrs.wrapper.ResponseWrapper;
+import com.example.hcrs.wrapper.loginresponse;
 
 public interface ApiService {
     @GET("getDoctors")
@@ -33,4 +36,8 @@ public interface ApiService {
     Call<ResponseWrapper<Receptionist>> updateReceptionist(@Path("receptionist_id") int receptionist_id, @Body Receptionist receptionist);
     @DELETE("deleteReceptionist/{receptionist_id}")
     Call<ResponseWrapper<Receptionist>> deleteReceptionist(@Path("receptionist_id") int receptionist_id);
+
+    // New login endpoint
+    @POST("login")
+    Call<loginresponse<User>> login(@Body LoginRequest loginRequest);
 }

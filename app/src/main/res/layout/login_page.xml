@@ -41,11 +41,11 @@
             android:layout_marginBottom="24dp"/>
 
         <EditText
-            android:id="@+id/emailInput"
+            android:id="@+id/etName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="48dp"
-            android:hint="Email"
+            android:hint="Username"
             android:textSize="20sp"
             android:textColor="#FFFFFF"
             android:textColorHint="#999999"
@@ -60,7 +60,7 @@
 
         <!-- Password Field -->
         <EditText
-            android:id="@+id/passwordInput"
+            android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
@@ -80,7 +80,7 @@
 
 
         <Button
-            android:id="@+id/loginButton"
+            android:id="@+id/btnLogin"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:text="Login"
