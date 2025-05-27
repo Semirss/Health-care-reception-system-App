@@ -11,8 +11,8 @@ public class Receptionist {
     private String email;
     @SerializedName("address")
     private String address;
-    @SerializedName("phone_number")
-    private String phone;
+    @SerializedName("phoneNumber")
+    private String phoneNumber;
     @SerializedName("password")
     private String password;
 
@@ -21,7 +21,7 @@ public class Receptionist {
         this.name = name;
         this.email = email;
         this.address = address;
-        this.phone = phone;
+        this.phoneNumber = phone;
         this.password = password;
     }
 
@@ -60,11 +60,11 @@ public class Receptionist {
     }
 
     public String getPhone() {
-        return phone;
+        return phoneNumber;
     }
 
     public void setPhone(String phone) {
-        this.phone = phone;
+        this.phoneNumber = phone;
     }
 
     public String getPassword() {
@@ -82,7 +82,7 @@ public class Receptionist {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", address='" + address + '\'' +
-                ", phone='" + phone + '\'' +
+                ", phone='" + phoneNumber + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }

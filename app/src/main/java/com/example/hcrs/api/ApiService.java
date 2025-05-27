@@ -29,9 +29,8 @@ public interface ApiService {
     @POST("addReceptionist")
     Call<ResponseWrapper<Receptionist>> addReceptionist(@Body Receptionist receptionist);
 
-    @PUT("updateReceptionist/:receptionist_id")
+    @PUT("updateReceptionist/{receptionist_id}")
     Call<ResponseWrapper<Receptionist>> updateReceptionist(@Path("receptionist_id") int receptionist_id, @Body Receptionist receptionist);
-
-    @DELETE("deleteReceptionist/:receptionist_id")
+    @DELETE("deleteReceptionist/{receptionist_id}")
     Call<ResponseWrapper<Receptionist>> deleteReceptionist(@Path("receptionist_id") int receptionist_id);
 }
