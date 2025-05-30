@@ -1,13 +1,43 @@
 package com.example.hcrs.data.entities;
 
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+import com.google.gson.annotations.SerializedName;
 
-@Entity(tableName = "que")
 public class Que {
-    @PrimaryKey(autoGenerate = true)
-    public int id;
+    private Integer status;
+    @SerializedName("card_id")
+    private int cardId;
+    private String date;
 
-    public int patientid;
-    public String month;
+    // Getter for status (raw Integer value)
+    public Integer getStatus() {
+        return status;
+    }
+
+    // Setter for status
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    // Getter to convert Integer to boolean
+    public boolean isStatus() {
+        return status != null && status == 1;
+    }
+
+    // Getter and setter for cardId
+    public int getCardId() {
+        return cardId;
+    }
+
+    public void setCardId(int cardId) {
+        this.cardId = cardId;
+    }
+
+    // Getter and setter for date
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 }

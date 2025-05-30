@@ -1,6 +1,5 @@
 package com.example.hcrs.data.entities;
 
-import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -8,21 +7,25 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "patient")
 public class Patient {
     @PrimaryKey
-    @NonNull
-    public String id;
+    @ColumnInfo(name = "patient_id")
+    private int patient_id;
 
-    public String name;
-    public String contact;
-    public String password;
+    @ColumnInfo(name = "name")
+    private String name;
 
-    @ColumnInfo(name = "createdAt")
-    public long createdAt; // Store timestamp as long (System.currentTimeMillis())
+    public int getPatient_id() {
+        return patient_id;
+    }
 
-    public Patient(@NonNull String id, String name, String contact, String password) {
-        this.id = id;
+    public void setPatient_id(int patient_id) {
+        this.patient_id = patient_id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
         this.name = name;
-        this.contact = contact;
-        this.password = password;
-        this.createdAt = System.currentTimeMillis(); // default time set
     }
 }

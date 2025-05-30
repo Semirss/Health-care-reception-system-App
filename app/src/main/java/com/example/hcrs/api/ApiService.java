@@ -5,10 +5,14 @@ package com.example.hcrs.api;
 import retrofit2.Call;
 import retrofit2.http.*;
 
+import com.example.hcrs.wrapper.DoctorIdResponse;
 import com.example.hcrs.auth.LoginRequest;
 import com.example.hcrs.data.entities.Doctor;
 import java.util.List;
+import java.util.Queue;
 
+import com.example.hcrs.data.entities.Patient;
+import com.example.hcrs.data.entities.Que;
 import com.example.hcrs.data.entities.Receptionist;
 import com.example.hcrs.data.entities.User;
 import com.example.hcrs.wrapper.DoctorResponse;
@@ -40,4 +44,17 @@ public interface ApiService {
     // New login endpoint
     @POST("login")
     Call<loginresponse<User>> login(@Body LoginRequest loginRequest);
+
+    @GET("queue/doctor/{doctor_id}")
+    Call<loginresponse<Que[]>> getQueueByDoctorID(@Path("doctor_id") int doctorId);
+
+    @GET("patient/{card_id}")
+    Call<loginresponse<Patient>> getPatientByCardID(@Path("card_id") int cardId);
+
+    @DELETE("queue/{queue_id}")
+    Call<loginresponse<Void>> deleteQueue(@Path("queue_id") int queueId);
+
+    @GET("user/doctor_id")
+    Call<loginresponse<Integer>> getDoctorId(@Query("name") String name, @Query("role") String role);
+
 }

@@ -1,5 +1,7 @@
 package com.example.hcrs.Admin;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,9 +15,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.hcrs.DoctorQueueManagerActivity;
 import com.example.hcrs.R;
 import com.example.hcrs.adapter.ReceptionAdapter;
 import com.example.hcrs.api.ApiService;
+import com.example.hcrs.auth.LoginActivity;
 import com.example.hcrs.data.entities.Receptionist;
 import com.example.hcrs.network.RetrofitClient;
 import com.example.hcrs.wrapper.ResponseWrapper;
@@ -31,7 +35,7 @@ public class AdminReceptionManagerActivity extends AppCompatActivity implements 
     private RecyclerView recyclerView;
     private ReceptionAdapter adapter;
     private List<Receptionist> receptionistList = new ArrayList<>();
-
+    private Button logoutButton;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +46,8 @@ public class AdminReceptionManagerActivity extends AppCompatActivity implements 
 
         adapter = new ReceptionAdapter(receptionistList, this);
         recyclerView.setAdapter(adapter);
-
+        logoutButton = findViewById(R.id.logoutButton);
+        logoutButton.setOnClickListener(v -> logout());
         findViewById(R.id.fabAddReception).setOnClickListener(v -> showAddEditDialog(null));
 
         loadReceptionists();
@@ -233,5 +238,15 @@ public class AdminReceptionManagerActivity extends AppCompatActivity implements 
                 Log.e("DeleteReceptionist", "Network error: " + t.getMessage(), t);
             }
         });
+    }
+    private void logout() {
+        SharedPreferences prefs = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.clear();
+        editor.apply();
+
+        Intent intent = new Intent(AdminReceptionManagerActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

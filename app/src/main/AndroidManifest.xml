@@ -31,6 +31,7 @@
     <activity android:name=".Admin.AdminDoctorManagerActivity" />
     <activity android:name=".Admin.AdminReceptionManagerActivity" />
     <activity android:name=".Admin.AdminPageActivity" />
+        <activity android:name=".DoctorQueueManagerActivity" />
 
 </application>
 
