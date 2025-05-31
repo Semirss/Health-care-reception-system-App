@@ -19,6 +19,8 @@ import com.example.hcrs.wrapper.DoctorResponse;
 import com.example.hcrs.wrapper.ResponseWrapper;
 import com.example.hcrs.wrapper.loginresponse;
 
+import org.json.JSONObject;
+
 public interface ApiService {
     @GET("getDoctors")
     Call<DoctorResponse> getAllDoctors();
@@ -51,10 +53,17 @@ public interface ApiService {
     @GET("patient/{card_id}")
     Call<loginresponse<Patient>> getPatientByCardID(@Path("card_id") int cardId);
 
-    @DELETE("queue/{queue_id}")
-    Call<loginresponse<Void>> deleteQueue(@Path("queue_id") int queueId);
+
 
     @GET("user/doctor_id")
     Call<loginresponse<Integer>> getDoctorId(@Query("name") String name, @Query("role") String role);
 
+    @GET("getCardByID/{card_id}")
+    Call<loginresponse<JSONObject>> getCardByID(@Path("card_id") int cardId);
+
+    @POST("addFindings/{card_id}")
+    Call<loginresponse<Void>> addFindingsToHistory(@Path("card_id") int cardId, @Body JSONObject requestBody);
+
+    @DELETE("queue/{queue_id}")
+    Call<loginresponse<Void>> deleteQueue(@Path("queue_id") int queueId);
 }

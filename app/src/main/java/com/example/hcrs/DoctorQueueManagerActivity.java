@@ -12,10 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hcrs.adapter.QueueAdapter;
-import com.example.hcrs.api.ApiService;
 import com.example.hcrs.auth.LoginActivity;
 import com.example.hcrs.data.entities.Que;
 import com.example.hcrs.network.RetrofitClient;
+import com.example.hcrs.api.ApiService;
 import com.example.hcrs.wrapper.loginresponse;
 
 import java.util.Arrays;
@@ -44,11 +44,13 @@ public class DoctorQueueManagerActivity extends AppCompatActivity {
 
         int doctorId = getIntent().getIntExtra("doctor_id", -1);
         if (doctorId == -1) {
+            Log.e("DoctorQueueManager", "Doctor ID not provided in intent");
             Toast.makeText(this, "Doctor ID not provided", Toast.LENGTH_LONG).show();
             finish();
             return;
         }
 
+        Log.d("DoctorQueueManager", "Received doctorID for queue: " + doctorId);
         fetchQueueByDoctorID(doctorId);
     }
 
@@ -61,8 +63,7 @@ public class DoctorQueueManagerActivity extends AppCompatActivity {
             public void onResponse(Call<loginresponse<Que[]>> call, Response<loginresponse<Que[]>> response) {
                 if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
                     Que[] queues = response.body().getData();
-                    if (queues != null) {
-                        // Log queue data for debugging
+                    if (queues != null && queues.length > 0) {
                         for (Que queue : queues) {
                             Log.d("DoctorQueueManager", "Queue item: status=" + queue.getStatus() +
                                     ", isStatus=" + queue.isStatus() +
@@ -71,7 +72,7 @@ public class DoctorQueueManagerActivity extends AppCompatActivity {
                         }
                         queueAdapter.setQueueList(Arrays.asList(queues));
                     } else {
-                        Log.e("DoctorQueueManager", "Queue data is null");
+                        Log.w("DoctorQueueManager", "Queue data is null or empty");
                         Toast.makeText(DoctorQueueManagerActivity.this, "No queue data available", Toast.LENGTH_LONG).show();
                     }
                 } else {

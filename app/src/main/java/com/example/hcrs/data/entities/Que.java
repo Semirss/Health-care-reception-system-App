@@ -6,6 +6,8 @@ public class Que {
     private Integer status;
     @SerializedName("card_id")
     private int cardId;
+    @SerializedName("queue_id")
+    private int queueId;
     private String date;
 
     // Getter for status (raw Integer value)
@@ -30,6 +32,15 @@ public class Que {
 
     public void setCardId(int cardId) {
         this.cardId = cardId;
+    }
+
+    // Getter and setter for queueId
+    public int getQueueId() {
+        return queueId;
+    }
+
+    public void setQueueId(int queueId) {
+        this.queueId = queueId;
     }
 
     // Getter and setter for date
