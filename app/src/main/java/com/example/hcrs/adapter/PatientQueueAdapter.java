@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,11 +36,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.QueueViewHolder> {
+public class PatientQueueAdapter extends RecyclerView.Adapter<PatientQueueAdapter.QueueViewHolder> {
     private Context context;
     private List<Que> queueList = new ArrayList<>();
 
-    public QueueAdapter(Context context) {
+    public PatientQueueAdapter(Context context) {
         this.context = context;
     }
 
@@ -58,7 +57,7 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.QueueViewHol
     @NonNull
     @Override
     public QueueViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_doctor_appointment, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_patient_page, parent, false);
         return new QueueViewHolder(view);
     }
 
@@ -77,7 +76,7 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.QueueViewHol
         try {
             String dateString = queue.getDate();
             if (dateString == null || dateString.isEmpty()) {
-                android.util.Log.w("QueueAdapter", "Empty date for queueId: " + queue.getQueueId());
+                android.util.Log.w("PatientQueueAdapter", "Empty date for queueId: " + queue.getQueueId());
                 return;
             }
 
@@ -85,7 +84,7 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.QueueViewHol
             sdf.setTimeZone(TimeZone.getTimeZone("EAT"));
             Date queueDate = sdf.parse(dateString);
             if (queueDate == null) {
-                android.util.Log.w("QueueAdapter", "Failed to parse date for queueId: " + queue.getQueueId());
+                android.util.Log.w("PatientQueueAdapter", "Failed to parse date for queueId: " + queue.getQueueId());
                 return;
             }
 
@@ -96,14 +95,14 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.QueueViewHol
             calendar.set(Calendar.SECOND, 0);
 
             if (calendar.getTimeInMillis() < System.currentTimeMillis()) {
-                android.util.Log.d("QueueAdapter", "Skipping past date for queueId: " + queue.getQueueId());
+                android.util.Log.d("PatientQueueAdapter", "Skipping past date for queueId: " + queue.getQueueId());
                 return;
             }
 
             AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
                 if (!alarmManager.canScheduleExactAlarms()) {
-                    android.util.Log.w("QueueAdapter", "Cannot schedule exact alarms for queueId: " + queue.getQueueId());
+                    android.util.Log.w("PatientQueueAdapter", "Cannot schedule exact alarms for queueId: " + queue.getQueueId());
                     Toast.makeText(context, "Please enable exact alarm permission in settings", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -111,7 +110,7 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.QueueViewHol
 
             Intent intent = new Intent(context, com.example.hcrs.NotificationReceiver.class);
             intent.putExtra("queueId", queue.getQueueId());
-            intent.putExtra("message", "Appointment Reminder: Your appointment (Card ID: " + queue.getCardId() + ") is today at " + dateString);
+            intent.putExtra("message", "Appointment Reminder: Your appointment with Dr. " + queue.getDoctorName() + " is today at " + dateString);
             PendingIntent pendingIntent = PendingIntent.getBroadcast(
                     context,
                     queue.getQueueId(),
@@ -125,23 +124,24 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.QueueViewHol
                         calendar.getTimeInMillis(),
                         pendingIntent
                 );
-                android.util.Log.d("QueueAdapter", "Scheduled notification for queueId: " + queue.getQueueId() + " at " + sdf.format(queueDate));
+                android.util.Log.d("PatientQueueAdapter", "Scheduled notification for queueId: " + queue.getQueueId() + " at " + sdf.format(queueDate));
             } catch (SecurityException e) {
-                android.util.Log.e("QueueAdapter", "SecurityException scheduling alarm: " + e.getMessage());
+                android.util.Log.e("PatientQueueAdapter", "SecurityException scheduling alarm: " + e.getMessage());
                 Toast.makeText(context, "Failed to schedule notification due to permission issue", Toast.LENGTH_LONG).show();
             }
         } catch (ParseException e) {
-            android.util.Log.e("QueueAdapter", "Error parsing date for notification: " + e.getMessage());
+            android.util.Log.e("PatientQueueAdapter", "Error parsing date for notification: " + e.getMessage());
         }
     }
 
     class QueueViewHolder extends RecyclerView.ViewHolder {
-        TextView cardIdTextView, dateTextView, statusTextView;
+        TextView doctorIdTextView, doctorNameTextView, dateTextView, statusTextView;
         Button btnSeeDetails, btnCancel;
 
         QueueViewHolder(@NonNull View itemView) {
             super(itemView);
-            cardIdTextView = itemView.findViewById(R.id.cardIdTextView);
+            doctorIdTextView = itemView.findViewById(R.id.doctorIdTextView);
+            doctorNameTextView = itemView.findViewById(R.id.doctorNameTextView);
             dateTextView = itemView.findViewById(R.id.dateTextView);
             statusTextView = itemView.findViewById(R.id.statusTextView);
             btnSeeDetails = itemView.findViewById(R.id.seeDetailsButton);
@@ -149,7 +149,8 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.QueueViewHol
         }
 
         void bind(Que queue) {
-            String cardIdText = queue.getCardId() != 0 ? String.valueOf(queue.getCardId()) : "Unknown ID";
+            String doctorIdText = queue.getDoctorId() != 0 ? String.valueOf(queue.getDoctorId()) : "Unknown ID";
+            String doctorNameText = queue.getDoctorName() != null ? queue.getDoctorName() : "Unknown Doctor";
             String dateText = queue.getDate() != null ? queue.getDate() : "No Date";
             String statusText = queue.getStatus() != null ? (queue.isStatus() ? "Active" : "Inactive") : "Unknown Status";
 
@@ -163,19 +164,23 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.QueueViewHol
                     Date date = inputFormat.parse(queue.getDate());
                     dateText = outputFormat.format(date);
                 } catch (ParseException e) {
-                    android.util.Log.e("QueueAdapter", "Error parsing queue date: " + e.getMessage());
+                    android.util.Log.e("PatientQueueAdapter", "Error parsing queue date: " + e.getMessage());
                     dateText = queue.getDate();
                 }
             }
 
-            if (queue.getCardId() == 0) {
-                android.util.Log.w("QueueAdapter", "Card ID is 0 at position: " + getAdapterPosition());
+            if (queue.getDoctorId() == 0) {
+                android.util.Log.w("PatientQueueAdapter", "Doctor ID is 0 at position: " + getAdapterPosition());
+            }
+            if (queue.getDoctorName() == null) {
+                android.util.Log.w("PatientQueueAdapter", "Doctor name is null at position: " + getAdapterPosition());
             }
             if (queue.getDate() == null) {
-                android.util.Log.w("QueueAdapter", "Date is null at position: " + getAdapterPosition());
+                android.util.Log.w("PatientQueueAdapter", "Date is null at position: " + getAdapterPosition());
             }
 
-            cardIdTextView.setText("Card ID: " + cardIdText);
+            doctorIdTextView.setText("Doctor ID: " + doctorIdText);
+            doctorNameTextView.setText("Doctor: " + doctorNameText);
             dateTextView.setText("Date: " + dateText);
             statusTextView.setText("Status: " + statusText);
 
@@ -185,7 +190,7 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.QueueViewHol
 
         private void showCardDetailsDialog(int cardId) {
             try {
-                View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_card_details, null);
+                View dialogView = LayoutInflater.from(context).inflate(R.layout.patient_dialog_card_details, null);
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setView(dialogView);
 
@@ -193,10 +198,9 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.QueueViewHol
                 TextView tvName = dialogView.findViewById(R.id.tv_name);
                 TextView tvDate = dialogView.findViewById(R.id.tv_date);
                 TextView tvHistory = dialogView.findViewById(R.id.tv_history);
-                EditText etNewFindings = dialogView.findViewById(R.id.et_new_findings);
-                EditText etPrescribed = dialogView.findViewById(R.id.et_prescribed);
                 Button btnCancel = dialogView.findViewById(R.id.btn_cancel);
-                Button btnUpdate = dialogView.findViewById(R.id.btn_update);
+
+
 
                 AlertDialog dialog = builder.create();
 
@@ -208,23 +212,23 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.QueueViewHol
                     public void onResponse(Call<loginresponse<JSONObject>> call, Response<loginresponse<JSONObject>> response) {
                         try {
                             String rawResponse = response.body() != null ? response.body().toString() : "Response body is null";
-                            android.util.Log.d("QueueAdapter", "Raw response: " + rawResponse);
+                            android.util.Log.d("PatientQueueAdapter", "Raw response: " + rawResponse);
 
                             if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
                                 JSONObject cardData = response.body().getData();
-                                android.util.Log.d("QueueAdapter", "Parsed cardData: " + (cardData != null ? cardData.toString() : "null"));
+                                android.util.Log.d("PatientQueueAdapter", "Parsed cardData: " + (cardData != null ? cardData.toString() : "null"));
 
                                 if (cardData != null && cardData.length() > 0) {
                                     if (cardData.has("nameValuePairs")) {
                                         cardData = cardData.optJSONObject("nameValuePairs");
-                                        android.util.Log.d("QueueAdapter", "Extracted nameValuePairs: " + (cardData != null ? cardData.toString() : "null"));
+                                        android.util.Log.d("PatientQueueAdapter", "Extracted nameValuePairs: " + (cardData != null ? cardData.toString() : "null"));
                                     }
 
                                     String patientId = cardData.has("patient_id") ? cardData.optString("patient_id", "N/A") : "N/A";
                                     String name = cardData.has("name") ? cardData.optString("name", "N/A") : "N/A";
                                     String dateStr = cardData.has("date") ? cardData.optString("date", "N/A") : "N/A";
 
-                                    android.util.Log.d("QueueAdapter", "Fields - patient_id: " + patientId + ", name: " + name + ", date: " + dateStr);
+                                    android.util.Log.d("PatientQueueAdapter", "Fields - patient_id: " + patientId + ", name: " + name + ", date: " + dateStr);
 
                                     tvPatientId.setText("Patient ID: " + patientId);
                                     tvName.setText("Name: " + name);
@@ -239,14 +243,14 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.QueueViewHol
                                             tvDate.setText("Date: " + sdfOutput.format(date));
                                         } catch (ParseException e) {
                                             tvDate.setText("Date: " + dateStr);
-                                            android.util.Log.e("QueueAdapter", "Error parsing date: " + e.getMessage());
+                                            android.util.Log.e("PatientQueueAdapter", "Error parsing date: " + e.getMessage());
                                         }
                                     } else {
                                         tvDate.setText("Date: N/A");
                                     }
 
                                     String historyStr = cardData.has("history") ? cardData.optString("history", "[]") : "[]";
-                                    android.util.Log.d("QueueAdapter", "History: " + historyStr);
+                                    android.util.Log.d("PatientQueueAdapter", "History: " + historyStr);
                                     try {
                                         if (!historyStr.startsWith("[")) {
                                             historyStr = "[" + historyStr + "]";
@@ -260,7 +264,7 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.QueueViewHol
                                                 JSONObject historyObj = history.getJSONObject(i);
                                                 String findings = historyObj.optString("new_findings", "");
                                                 String prescribed = historyObj.optString("prescribed", "");
-                                                android.util.Log.d("QueueAdapter", "Entry " + i + ": findings=" + findings + ", prescribed=" + prescribed);
+                                                android.util.Log.d("PatientQueueAdapter", "Entry " + i + ": findings=" + findings + ", prescribed=" + prescribed);
 
                                                 if (!findings.isEmpty() || !prescribed.isEmpty()) {
                                                     hasValidEntry = true;
@@ -271,20 +275,20 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.QueueViewHol
                                                             .append("\n\n");
                                                 }
                                             } catch (Exception e) {
-                                                android.util.Log.w("QueueAdapter", "Skipping invalid history entry " + i + ": " + e.getMessage());
+                                                android.util.Log.w("PatientQueueAdapter", "Skipping invalid history entry " + i + ": " + e.getMessage());
                                             }
                                         }
                                         tvHistory.setText(hasValidEntry ? historyText.toString() : "No valid history available");
                                     } catch (Exception e) {
                                         tvHistory.setText("Error parsing history");
-                                        android.util.Log.e("QueueAdapter", "Error parsing history: " + e.getMessage());
+                                        android.util.Log.e("PatientQueueAdapter", "Error parsing history: " + e.getMessage());
                                     }
                                 } else {
                                     tvPatientId.setText("Patient ID: N/A");
                                     tvName.setText("Name: N/A");
                                     tvDate.setText("Date: N/A");
                                     tvHistory.setText("No card data available");
-                                    android.util.Log.e("QueueAdapter", "cardData is null or empty");
+                                    android.util.Log.e("PatientQueueAdapter", "cardData is null or empty");
                                 }
                             } else {
                                 String errorMsg = response.body() != null ? response.body().getMessage() : "HTTP " + response.code();
@@ -292,14 +296,14 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.QueueViewHol
                                 tvName.setText("Name: N/A");
                                 tvDate.setText("Date: N/A");
                                 tvHistory.setText("Failed to load card details: " + errorMsg);
-                                android.util.Log.e("QueueAdapter", "Card fetch failed: " + errorMsg);
+                                android.util.Log.e("PatientQueueAdapter", "Card fetch failed: " + errorMsg);
                             }
                         } catch (Exception e) {
                             tvPatientId.setText("Patient ID: N/A");
                             tvName.setText("Name: N/A");
                             tvDate.setText("Date: N/A");
                             tvHistory.setText("Error loading card data: " + e.getMessage());
-                            android.util.Log.e("QueueAdapter", "Response handling error: " + e.getMessage());
+                            android.util.Log.e("PatientQueueAdapter", "Response handling error: " + e.getMessage());
                         }
                     }
 
@@ -309,66 +313,22 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.QueueViewHol
                         tvName.setText("Name: N/A");
                         tvDate.setText("Date: N/A");
                         tvHistory.setText("Network error: " + t.getMessage());
-                        android.util.Log.e("QueueAdapter", "Network error: " + t.getMessage());
+                        android.util.Log.e("PatientQueueAdapter", "Network error: " + t.getMessage());
                     }
                 });
 
                 btnCancel.setOnClickListener(v -> dialog.dismiss());
 
-                btnUpdate.setOnClickListener(v -> {
-                    String newFindings = etNewFindings.getText().toString().trim();
-                    String prescribed = etPrescribed.getText().toString().trim();
-                    android.util.Log.d("QueueAdapter", "Update requested: newFindings=" + newFindings + ", prescribed=" + prescribed);
-
-                    if (newFindings.isEmpty() && prescribed.isEmpty()) {
-                        Toast.makeText(context, "Please enter findings or prescribed treatment", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-
-                    JSONObject requestBody = new JSONObject();
-                    try {
-                        requestBody.put("new_findings", newFindings);
-                        requestBody.put("prescribed", prescribed);
-                    } catch (Exception e) {
-                        Toast.makeText(context, "Error preparing request", Toast.LENGTH_SHORT).show();
-                        android.util.Log.e("QueueAdapter", "Error building JSON request: " + e.getMessage());
-                        return;
-                    }
-
-                    Call<loginresponse<Void>> updateCall = apiService.addFindingsToHistory(cardId, requestBody);
-                    updateCall.enqueue(new Callback<loginresponse<Void>>() {
-                        @Override
-                        public void onResponse(Call<loginresponse<Void>> call, Response<loginresponse<Void>> response) {
-                            if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
-                                android.util.Log.d("QueueAdapter", "History update successful");
-                                Toast.makeText(context, "History updated successfully", Toast.LENGTH_SHORT).show();
-                                dialog.dismiss();
-                                showCardDetailsDialog(cardId);
-                            } else {
-                                String message = response.body() != null ? response.body().getMessage() : "Error: HTTP " + response.code();
-                                android.util.Log.e("QueueAdapter", "History update failed: " + message);
-                                Toast.makeText(context, "Failed to update history: " + message, Toast.LENGTH_LONG).show();
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<loginresponse<Void>> call, Throwable t) {
-                            android.util.Log.e("QueueAdapter", "Network error on history update: " + t.getMessage());
-                            Toast.makeText(context, "Network error: " + t.getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                    });
-                });
-
                 dialog.show();
             } catch (Exception e) {
-                android.util.Log.e("QueueAdapter", "Error showing dialog: " + e.getMessage());
+                android.util.Log.e("PatientQueueAdapter", "Error showing dialog: " + e.getMessage());
                 Toast.makeText(context, "Error loading card details", Toast.LENGTH_SHORT).show();
             }
         }
 
         private void deleteQueue(int queueId, int position) {
             try {
-                android.util.Log.d("QueueAdapter", "Attempting to delete queueId: " + queueId + " at position: " + position);
+                android.util.Log.d("PatientQueueAdapter", "Attempting to delete queueId: " + queueId + " at position: " + position);
                 ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
                 Call<loginresponse<Void>> call = apiService.deleteQueue(queueId);
 
@@ -377,37 +337,37 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.QueueViewHol
                     public void onResponse(Call<loginresponse<Void>> call, Response<loginresponse<Void>> response) {
                         try {
                             if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
-                                android.util.Log.d("QueueAdapter", "Queue item deleted: queueId=" + queueId);
+                                android.util.Log.d("PatientQueueAdapter", "Queue item deleted: queueId=" + queueId);
                                 if (position >= 0 && position < queueList.size()) {
                                     queueList.remove(position);
                                     notifyItemRemoved(position);
                                     notifyItemRangeChanged(position, queueList.size());
-                                    android.util.Log.d("QueueAdapter", "UI updated, new list size: " + queueList.size());
+                                    android.util.Log.d("PatientQueueAdapter", "UI updated, new list size: " + queueList.size());
                                     cancelNotification(queueId);
                                 } else {
-                                    android.util.Log.w("QueueAdapter", "Invalid position: " + position + ", full refresh");
+                                    android.util.Log.w("PatientQueueAdapter", "Invalid position: " + position + ", full refresh");
                                     notifyDataSetChanged();
                                 }
                                 Toast.makeText(context, "Queue item deleted successfully", Toast.LENGTH_SHORT).show();
                             } else {
                                 String message = response.body() != null ? response.body().getMessage() : "Error: HTTP " + response.code();
-                                android.util.Log.e("QueueAdapter", "Failed to delete queue: " + message);
+                                android.util.Log.e("PatientQueueAdapter", "Failed to delete queue: " + message);
                                 Toast.makeText(context, "Failed to delete queue: " + message, Toast.LENGTH_LONG).show();
                             }
                         } catch (Exception e) {
-                            android.util.Log.e("QueueAdapter", "Error processing delete response: " + e.getMessage());
+                            android.util.Log.e("PatientQueueAdapter", "Error processing delete response: " + e.getMessage());
                             Toast.makeText(context, "Error deleting queue: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<loginresponse<Void>> call, Throwable t) {
-                        android.util.Log.e("QueueAdapter", "Network error deleting queue: " + t.getMessage());
+                        android.util.Log.e("PatientQueueAdapter", "Network error deleting queue: " + t.getMessage());
                         Toast.makeText(context, "Network error: " + t.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
             } catch (Exception e) {
-                android.util.Log.e("QueueAdapter", "Error initiating delete: " + e.getMessage());
+                android.util.Log.e("PatientQueueAdapter", "Error initiating delete: " + e.getMessage());
                 Toast.makeText(context, "Error deleting queue: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
@@ -424,7 +384,7 @@ public class QueueAdapter extends RecyclerView.Adapter<QueueAdapter.QueueViewHol
                 AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
                 alarmManager.cancel(pendingIntent);
                 pendingIntent.cancel();
-                android.util.Log.d("QueueAdapter", "Cancelled notification for queueId: " + queueId);
+                android.util.Log.d("PatientQueueAdapter", "Cancelled notification for queueId: " + queueId);
             }
         }
     }

@@ -1,5 +1,3 @@
-// File path: src/main/java/com/example/hcrs/api/ApiService.java
-
 package com.example.hcrs.api;
 
 import retrofit2.Call;
@@ -27,10 +25,11 @@ public interface ApiService {
     @POST("addDoctor")
     Call<DoctorResponse> addDoctor(@Body Doctor doctor);
 
-    @PUT("updateDoctor/{doctor_id}") // Updated to match server route
+    @PUT("updateDoctor/{doctor_id}")
     Call<DoctorResponse> updateDoctor(@Path("doctor_id") int doctor_id, @Body Doctor doctor);
     @DELETE("deleteDoctor/{doctor_id}")
     Call<DoctorResponse> deleteDoctor(@Path("doctor_id") int doctor_id);
+
     // Receptionist endpoints
     @GET("getReceptionists")
     Call<ResponseWrapper<Receptionist>> getAllReceptionists();
@@ -50,10 +49,11 @@ public interface ApiService {
     @GET("queue/doctor/{doctor_id}")
     Call<loginresponse<Que[]>> getQueueByDoctorID(@Path("doctor_id") int doctorId);
 
+    @GET("queue/patient/{patient_id}")
+    Call<loginresponse<List<Que>>> getQueueByPatientID(@Path("patient_id") int patientId);
+
     @GET("patient/{card_id}")
     Call<loginresponse<Patient>> getPatientByCardID(@Path("card_id") int cardId);
-
-
 
     @GET("user/doctor_id")
     Call<loginresponse<Integer>> getDoctorId(@Query("name") String name, @Query("role") String role);
@@ -62,7 +62,7 @@ public interface ApiService {
     Call<loginresponse<JSONObject>> getCardByID(@Path("card_id") int cardId);
 
     @POST("addFindings/{card_id}")
-    Call<loginresponse<Void>> addFindingsToHistory(@Path("card_id") int cardId, @Body JSONObject requestBody);
+    Call<loginresponse<Void>> addFindingsToHistory(@Path("card_id") int cardId, @Body JSONObject body);
 
     @DELETE("queue/{queue_id}")
     Call<loginresponse<Void>> deleteQueue(@Path("queue_id") int queueId);
