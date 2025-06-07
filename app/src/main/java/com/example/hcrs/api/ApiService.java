@@ -3,6 +3,10 @@ package com.example.hcrs.api;
 import retrofit2.Call;
 import retrofit2.http.*;
 
+import com.example.hcrs.data.entities.DoctorSelection;
+import com.example.hcrs.wrapper.ApiResponse;
+import com.example.hcrs.wrapper.AppointmentRequest;
+import com.example.hcrs.wrapper.DeletePatientRequest;
 import com.example.hcrs.wrapper.DoctorIdResponse;
 import com.example.hcrs.auth.LoginRequest;
 import com.example.hcrs.data.entities.Doctor;
@@ -66,4 +70,21 @@ public interface ApiService {
 
     @DELETE("queue/{queue_id}")
     Call<loginresponse<Void>> deleteQueue(@Path("queue_id") int queueId);
+
+    // Patient endpoints
+
+    @GET("getallpatients")
+    Call<ApiResponse<List<Patient>>> getAllPatients();
+
+    @POST("registerpatient")
+    Call<ApiResponse<Void>> registerPatient(@Body Patient patient);
+    @DELETE("deletepatient/{patient_id}")
+    Call<ApiResponse<String>> deletePatient(@Path("patient_id") int patientId);
+    @GET("getDoctors")
+    Call<ApiResponse<List<DoctorSelection>>> getDoctors();
+
+    @POST("setAppointment/{patient_id}")
+    Call<ApiResponse<String>> setAppointment(@Path("patient_id") int patientId, @Body AppointmentRequest request);
+
+
 }

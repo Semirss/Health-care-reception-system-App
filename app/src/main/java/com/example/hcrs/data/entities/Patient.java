@@ -4,28 +4,63 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.HashMap;
+
 @Entity(tableName = "patient")
-public class Patient {
+public class Patient extends Person {
     @PrimaryKey
     @ColumnInfo(name = "patient_id")
-    private int patient_id;
+    @SerializedName("patient_id")
+    private int patientId;
 
-    @ColumnInfo(name = "name")
-    private String name;
+    @SerializedName("address")
+    private String address;
 
-    public int getPatient_id() {
-        return patient_id;
+    @SerializedName("history")
+    private HashMap<String, Object> history;
+
+    @SerializedName("date")
+    private String date;
+
+    public Patient() {
+        super();
+        setRole("patient");
+        this.history = new HashMap<>();
+        this.address = "";
+        this.date = "";
     }
 
-    public void setPatient_id(int patient_id) {
-        this.patient_id = patient_id;
+    public int getPatientId() {
+        return patientId;
     }
 
-    public String getName() {
-        return name;
+    public void setPatientId(int patientId) {
+        this.patientId = patientId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address != null ? address : "";
+    }
+
+    public HashMap<String, Object> getHistory() {
+        return history;
+    }
+
+    public void setHistory(HashMap<String, Object> history) {
+        this.history = history != null ? history : new HashMap<>();
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date != null ? date : "";
     }
 }

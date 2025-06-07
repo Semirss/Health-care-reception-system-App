@@ -34,6 +34,10 @@
     <activity android:name=".Admin.AdminPageActivity" />
         <activity android:name=".DoctorQueueManagerActivity" />
         <activity android:name=".PatientPageActivity" android:exported="false" />
+        <activity android:name=".PatientListActivity" />
+        <activity android:name="com.example.hcrs.adapter.RegisterActivity"
+            android:exported="false" />
+
         <receiver android:name=".NotificationReceiver" android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

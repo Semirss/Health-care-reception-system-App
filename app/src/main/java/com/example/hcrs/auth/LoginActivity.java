@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hcrs.Admin.AdminReceptionManagerActivity;
 import com.example.hcrs.DoctorQueueManagerActivity;
+import com.example.hcrs.PatientListActivity;
 import com.example.hcrs.PatientPageActivity;
 import com.example.hcrs.R;
 import com.example.hcrs.api.ApiService;
@@ -40,40 +41,54 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         prefs = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
+        SharedPreferences hcrsPrefs = getSharedPreferences("hcrs_prefs", MODE_PRIVATE);
+        boolean isLoggedOut = getIntent().getBooleanExtra("is_logged_out", false) || hcrsPrefs.getBoolean("is_logged_out", false);
 
-        // Check if already logged in
-        if (prefs.getBoolean("isLoggedIn", false)) {
-            String role = prefs.getString("role", "");
-            int personId = prefs.getInt("person_id", 0);
-            Log.d("LoginActivity", "Auto-login: role=" + role + ", person_id=" + personId);
+        // Log SharedPreferences values for debugging
+        boolean isLoggedIn = prefs.getBoolean("isLoggedIn", false);
+        String role = prefs.getString("role", "");
+        int personId = prefs.getInt("person_id", 0);
+        int doctorId = prefs.getInt("doctor_id", 0);
+        Log.d("LoginActivity", "SharedPreferences: isLoggedIn=" + isLoggedIn + ", role=" + role + ", person_id=" + personId + ", doctor_id=" + doctorId);
+
+        // Check if already logged in and not explicitly logged out
+        if (!isLoggedOut && isLoggedIn) {
             if ("doctor".equalsIgnoreCase(role)) {
+                if (doctorId == 0) {
+                    Log.e("LoginActivity", "Invalid doctor_id, staying on login");
+                    Toast.makeText(this, "Invalid doctor ID, please log in again", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 Intent intent = new Intent(LoginActivity.this, DoctorQueueManagerActivity.class);
-                intent.putExtra("doctor_id", prefs.getInt("doctor_id", 0));
+                intent.putExtra("doctor_id", doctorId);
                 intent.putExtra("name", prefs.getString("name", ""));
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 finish();
             } else if ("receptionist".equalsIgnoreCase(role)) {
-                Intent intent = new Intent(LoginActivity.this, AdminReceptionManagerActivity.class);
+                Intent intent = new Intent(LoginActivity.this, PatientListActivity.class);
                 intent.putExtra("person_id", personId);
                 intent.putExtra("name", prefs.getString("name", ""));
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 finish();
             } else if ("patient".equalsIgnoreCase(role)) {
                 int patientId = prefs.getInt("patient_id", 0);
-                Log.d("LoginActivity", "Auto-login for patient, patient_id: " + patientId);
                 if (patientId == 0) {
-                    Log.e("LoginActivity", "Invalid patient_id in SharedPreferences, clearing");
-                    prefs.edit().clear().apply();
+                    Log.e("LoginActivity", "Invalid patient_id, staying on login");
+                    Toast.makeText(this, "Invalid patient ID, please log in again", Toast.LENGTH_LONG).show();
                     return;
                 }
                 Intent intent = new Intent(LoginActivity.this, PatientPageActivity.class);
                 intent.putExtra("patient_id", patientId);
                 intent.putExtra("name", prefs.getString("name", ""));
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 finish();
             } else {
-                Log.e("LoginActivity", "Invalid role in SharedPreferences: " + role + ", clearing preferences");
+                Log.e("LoginActivity", "Invalid role: " + role + ", clearing preferences");
                 prefs.edit().clear().apply();
+                Toast.makeText(this, "Invalid role, please log in again", Toast.LENGTH_LONG).show();
             }
             return;
         }
@@ -84,8 +99,8 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
 
         if (etName == null || etPassword == null || btnLogin == null) {
-            Log.e("LoginActivity", "View initialization failed: etName=" + etName + ", etPassword=" + etPassword + ", btnLogin=" + btnLogin);
-            Toast.makeText(this, "View initialization error, check login_page.xml", Toast.LENGTH_LONG).show();
+            Log.e("LoginActivity", "View initialization failed");
+            Toast.makeText(this, "View initialization error", Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -120,16 +135,17 @@ public class LoginActivity extends AppCompatActivity {
 
                     if ("doctor".equalsIgnoreCase(user.getRole())) {
                         fetchDoctorId(user.getName(), user.getRole(), user);
-                    } else if ("receptionist".equals(user.getRole())) {
+                    } else if ("receptionist".equalsIgnoreCase(user.getRole())) {
                         saveLoginState(user.getPersonId(), user.getName(), user.getRole(), 0, null);
-                        Intent intent = new Intent(LoginActivity.this, AdminReceptionManagerActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, PatientListActivity.class);
                         intent.putExtra("person_id", user.getPersonId());
                         intent.putExtra("name", user.getName());
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
                         finish();
                     } else if ("patient".equalsIgnoreCase(user.getRole())) {
                         Integer patientId = user.getPatientId();
-                        if (patientId == null && patientId != 0) {
+                        if (patientId == null || patientId == 0) {
                             Toast.makeText(LoginActivity.this, "Invalid patient ID for patient role", Toast.LENGTH_LONG).show();
                             Log.e("LoginActivity", "Invalid patient_id: " + patientId);
                             return;
@@ -138,6 +154,7 @@ public class LoginActivity extends AppCompatActivity {
                         Intent intent = new Intent(LoginActivity.this, PatientPageActivity.class);
                         intent.putExtra("patient_id", patientId);
                         intent.putExtra("name", user.getName());
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         Log.d("LoginActivity", "Navigating to PatientPageActivity with patient_id: " + patientId);
                         startActivity(intent);
                         finish();
@@ -174,6 +191,7 @@ public class LoginActivity extends AppCompatActivity {
                     Intent intent = new Intent(LoginActivity.this, DoctorQueueManagerActivity.class);
                     intent.putExtra("doctor_id", doctorId);
                     intent.putExtra("name", user.getName());
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                     finish();
                 } else {
@@ -204,6 +222,11 @@ public class LoginActivity extends AppCompatActivity {
             editor.putInt("patient_id", patientId);
         }
         editor.apply();
+
+        // Clear is_logged_out in hcrs_prefs
+        SharedPreferences hcrsPrefs = getSharedPreferences("hcrs_prefs", MODE_PRIVATE);
+        hcrsPrefs.edit().putBoolean("is_logged_out", false).apply();
+
         Log.d("LoginActivity", "Saved login state: person_id=" + personId + ", role=" + role + ", doctor_id=" + doctorId + ", patient_id=" + patientId);
     }
 }
