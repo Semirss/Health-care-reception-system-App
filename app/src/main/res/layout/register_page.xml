@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:padding="16dp"
     android:gravity="center"
-    android:background="#F5F5F5">
+    android:background="@drawable/landback2">
 
     <TextView
         android:layout_width="wrap_content"
@@ -13,7 +13,8 @@
         android:text="Register Patient"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:textColor="#000000"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
         android:layout_marginBottom="24dp" />
 
     <EditText
@@ -23,6 +24,8 @@
         android:hint="Full Name"
         android:inputType="textPersonName"
         android:padding="12dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
         android:layout_marginBottom="16dp" />
 
     <EditText
@@ -32,6 +35,8 @@
         android:hint="Email"
         android:inputType="textEmailAddress"
         android:padding="12dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
         android:layout_marginBottom="16dp" />
 
     <EditText
@@ -41,6 +46,8 @@
         android:hint="Address"
         android:inputType="textPostalAddress"
         android:padding="12dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
         android:layout_marginBottom="16dp" />
 
     <EditText
@@ -48,7 +55,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Phone Number"
-
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
         android:inputType="phone"
         android:padding="12dp"
         android:layout_marginBottom="16dp" />
@@ -60,6 +68,8 @@
         android:hint="Password"
         android:inputType="textPassword"
         android:padding="12dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
         android:layout_marginBottom="24dp" />
 
     <Button
@@ -68,8 +78,8 @@
         android:layout_height="wrap_content"
         android:text="Register"
         android:backgroundTint="#4CAF50"
-        android:textColor="#FFFFFF"
-        android:padding="12dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"        android:padding="12dp"
         android:layout_marginBottom="16dp" />
 
     <TextView

@@ -10,6 +10,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.hcrs.Admin.AdminLoginActivity;
+import com.example.hcrs.Admin.AdminPageActivity;
 import com.example.hcrs.Admin.AdminReceptionManagerActivity;
 import com.example.hcrs.DoctorQueueManagerActivity;
 import com.example.hcrs.PatientListActivity;
@@ -27,6 +29,7 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity {
     private EditText etName, etPassword;
     private Button btnLogin;
+    private Button btnAdmin;
     private SharedPreferences prefs;
 
     @Override
@@ -97,7 +100,11 @@ public class LoginActivity extends AppCompatActivity {
         etName = findViewById(R.id.etName);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
-
+        btnAdmin = findViewById(R.id.btnAdmin);
+        btnAdmin.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, AdminLoginActivity.class);
+            startActivity(intent);
+        });
         if (etName == null || etPassword == null || btnLogin == null) {
             Log.e("LoginActivity", "View initialization failed");
             Toast.makeText(this, "View initialization error", Toast.LENGTH_LONG).show();

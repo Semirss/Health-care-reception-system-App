@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="24dp"
-    android:background="@drawable/bg_gradient2">
+    android:background="@drawable/landback2">
 
     <!-- Title Text -->
     <TextView

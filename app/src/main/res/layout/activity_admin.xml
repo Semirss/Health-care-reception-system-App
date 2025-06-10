@@ -5,60 +5,100 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:background="#FAFAFA">
-    <!-- Add this inside your root layout, e.g. RelativeLayout or ConstraintLayout -->
-    <ImageView
-        android:id="@+id/logoutIcon"
+    android:padding="24dp"
+    android:background="@drawable/landback2" > <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="32dp">
+
+    <TextView
+        android:id="@+id/welcomeMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Admin Dashboard"
+        android:textSize="24sp"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:id="@+id/logoutIcon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:contentDescription="Logout"
         android:src="@drawable/ic_logout"
-    android:contentDescription="Logout"
-    android:layout_alignParentEnd="true"
-    android:layout_margin="16dp"
-    android:clickable="true"
-    android:focusable="true"/>
+        android:layout_alignParentEnd="true"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?attr/selectableItemBackgroundBorderless" />
+</RelativeLayout>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardDoctor"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginBottom="16dp"
-        card_view:cardCornerRadius="12dp"
-        card_view:cardElevation="8dp"
+        android:layout_height="180dp"
+        android:layout_marginBottom="24dp"
+        card_view:cardCornerRadius="16dp"
+        card_view:cardElevation="10dp"
         android:clickable="true"
         android:foreground="?attr/selectableItemBackground"
-        >
+        card_view:cardBackgroundColor="@android:color/white" > <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="16dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Doctor"
-            android:textSize="28sp"
-            android:gravity="center"
-            android:textColor="#333333"
-            android:textStyle="bold" />
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/d"
+            android:contentDescription="Doctor Icon"
+            /> <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Doctor Access"
+        android:textSize="26sp"
+        android:gravity="center"
+        android:textColor="@color/black" android:textStyle="bold"
+        android:layout_marginTop="8dp" />
+    </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardReception"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        card_view:cardCornerRadius="12dp"
-        card_view:cardElevation="8dp"
+        android:layout_height="180dp"
+        card_view:cardCornerRadius="16dp"
+        card_view:cardElevation="10dp"
         android:clickable="true"
         android:foreground="?attr/selectableItemBackground"
-        >
+        card_view:cardBackgroundColor="@android:color/white" >
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Reception"
-            android:textSize="28sp"
+            android:orientation="vertical"
             android:gravity="center"
-            android:textColor="#333333"
-            android:textStyle="bold" />
+            android:padding="16dp">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/f" android:contentDescription="Reception Icon"></ImageView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reception Desk"
+                android:textSize="26sp"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 

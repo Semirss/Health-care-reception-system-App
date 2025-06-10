@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_gradient2"
+    android:background="@drawable/landback2"
     android:padding="16dp">
 
     <TextView
@@ -13,6 +13,7 @@
         android:text="Patient List"
         android:textSize="28sp"
         android:textStyle="bold"
+        android:padding="10dp"
         android:textColor="#FFFFFF"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,7 +24,7 @@
         android:id="@+id/logoutIcon"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:src="@android:drawable/ic_menu_close_clear_cancel"
+        android:src="@drawable/ic_logout"
         android:contentDescription="Logout"
         android:padding="8dp"
         app:tint="#FFFFFF"
