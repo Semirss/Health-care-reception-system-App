@@ -5,7 +5,7 @@
     android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/landback2">
+    android:background="@drawable/fnfn">
 
     <TextView
         android:text="Admin Login"
@@ -21,7 +21,7 @@
         android:hint="Admin Name"
         android:inputType="textPersonName"
         android:textColor="#FFF"
-        android:textColorHint="#BBB"
+        android:textColorHint="#fff"
         android:backgroundTint="#FFFFFF"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
         android:hint="Password"
         android:inputType="textPassword"
         android:textColor="#FFF"
-        android:textColorHint="#BBB"
+        android:textColorHint="#fff"
         android:backgroundTint="#FFFFFF"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -42,8 +42,8 @@
         android:id="@+id/btnLogin"
         android:text="Login"
         android:textAllCaps="false"
-        android:backgroundTint="#6200EE"
-        android:textColor="#FFF"
+        android:backgroundTint="#FBB054"
+        android:textColor="#000"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

@@ -5,7 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="16dp"
-    android:background="#1A1A1A">
+    android:layout_margin="5dp"
+    android:background="@drawable/login_card_border"
+
+  >
 
     <TextView
         android:id="@+id/tv_patient_id"
@@ -58,7 +61,7 @@
         android:layout_height="wrap_content"
         android:text="Close"
         android:textColor="#FFFFFF"
-        android:backgroundTint="#1976D2"
+        android:backgroundTint="#D32F2f"
         android:minHeight="48dp"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"

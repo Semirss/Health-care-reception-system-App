@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Doctor ID: Unknown"
-            android:textColor="#1DCD9F"
+            android:textColor="#FBB054"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Doctor: Unknown"
-            android:textColor="#FFFFFF"
+            android:textColor="#FBB054"
             android:textSize="16sp"
             android:layout_marginTop="4dp" />
 
@@ -84,8 +84,8 @@
                 android:layout_height="48dp"
                 android:layout_weight="1"
                 android:text="See Details"
-                android:textColor="#FFFFFF"
-                android:backgroundTint="#1976D2"
+                android:textColor="#000"
+                android:backgroundTint="#FBB054"
                 android:layout_marginStart="8dp"
                 android:minHeight="48dp"
                 android:paddingVertical="8dp"/>

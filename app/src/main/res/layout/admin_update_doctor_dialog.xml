@@ -143,7 +143,7 @@
             android:textStyle="bold"
             android:paddingTop="12dp"
             android:paddingBottom="12dp"
-            android:backgroundTint="@color/black" android:textColor="@android:color/white"
+            android:backgroundTint="#FBB054" android:textColor="@android:color/white"
             android:elevation="6dp"
             android:stateListAnimator="@null"
             style="@style/Widget.MaterialComponents.Button" />

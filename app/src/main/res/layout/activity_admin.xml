@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="24dp"
-    android:background="@drawable/landback2" > <RelativeLayout
+    android:background="@drawable/fnfn" > <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="32dp">
@@ -43,12 +43,14 @@
         card_view:cardElevation="10dp"
         android:clickable="true"
         android:foreground="?attr/selectableItemBackground"
-        card_view:cardBackgroundColor="@android:color/white" > <LinearLayout
+        card_view:cardBackgroundColor="@android:color/white" >
+        <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
-        android:padding="16dp">
+        android:padding="16dp"
+            >
 
         <ImageView
             android:layout_width="80dp"
@@ -61,7 +63,7 @@
         android:text="Doctor Access"
         android:textSize="26sp"
         android:gravity="center"
-        android:textColor="@color/black" android:textStyle="bold"
+        android:textColor="#FBB054" android:textStyle="bold"
         android:layout_marginTop="8dp" />
     </LinearLayout>
 
@@ -95,7 +97,7 @@
                 android:text="Reception Desk"
                 android:textSize="26sp"
                 android:gravity="center"
-                android:textColor="@color/black"
+                android:textColor="#FBB054"
                 android:textStyle="bold"
                 android:layout_marginTop="8dp" />
         </LinearLayout>

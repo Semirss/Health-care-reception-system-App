@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Doctor: Dr. John Smith"
-            android:textColor="#1DCD9F"
+            android:textColor="#FBB054"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -54,13 +54,14 @@
                 android:id="@+id/rescheduleButton"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
-                android:layout_weight="1"
-                android:text="Reschedule"
-                android:textColor="#fff"
-                android:backgroundTint="#1976D2"
                 android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:backgroundTint="#FBB054"
                 android:minHeight="48dp"
-                android:paddingVertical="12dp"/>
+                android:paddingVertical="12dp"
+                android:text="Reschedule"
+                android:textColor="#000" />
+
             <Button
                 android:id="@+id/cancelButton"
                 android:layout_width="0dp"

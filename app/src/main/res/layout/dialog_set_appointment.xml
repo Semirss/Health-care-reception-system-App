@@ -49,13 +49,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cancel"
+            android:backgroundTint="#FBB054"
             android:layout_marginEnd="8dp" />
 
         <Button
             android:id="@+id/btnConfirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Confirm" />
+            android:text="Confirm"
+            android:backgroundTint="#FBB054"/>
 
     </LinearLayout>
 

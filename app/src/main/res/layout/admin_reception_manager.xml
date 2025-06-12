@@ -4,14 +4,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    android:background="@drawable/landback2"
+    android:background="@drawable/fnfn"
     >
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:text="Reseptionist cr"
+        android:textSize="40dp"
+        android:layout_marginTop="40dp"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerReception"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="100dp"
+
         android:layout_above="@+id/fabAddReception" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -23,10 +31,14 @@
         android:layout_alignParentEnd="true"
         android:layout_margin="16dp"
         android:src="@android:drawable/ic_input_add" />
+
     <Button
+        android:id="@+id/logoutButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/black"
-    android:text="logout"
-        android:id="@+id/logoutButton"/>
+        android:backgroundTint="#FBB054"
+        android:textColor="#000"
+        android:text="logout"
+
+        />
 </RelativeLayout>

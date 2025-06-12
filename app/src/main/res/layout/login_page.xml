@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/landback2"
+    android:background="@drawable/fnfn"
     android:padding="24dp">
 
     <LinearLayout
@@ -27,7 +27,7 @@
             android:layout_height="80dp"
             android:layout_marginBottom="16dp"
             android:src="@drawable/ic_launcher_foreground"
-            app:tint="#1DCD9F" />
+            app:tint="#FBB054" />
 
         <!-- Title -->
         <TextView
@@ -56,26 +56,27 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#1DCD9F" />
+            android:background="#FBB054" />
 
         <!-- Password Field -->
+
         <EditText
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@android:color/transparent"
             android:hint="Password"
-            android:textSize="20sp"
+            android:inputType="textPassword"
             android:minHeight="48dp"
             android:textColor="#FFFFFF"
             android:textColorHint="#999999"
-            android:background="@android:color/transparent"
-            android:inputType="textPassword"
-            android:layout_marginTop="24dp"/>
+            android:textSize="20sp" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#1DCD9F" />
+            android:background="#FBB054" />
 
         <Button
             android:id="@+id/btnLogin"
@@ -84,7 +85,7 @@
             android:text="Login"
             android:textColor="#000000"
             android:textStyle="bold"
-            android:backgroundTint="#1DCD9F"
+            android:backgroundTint="#FBB054"
             android:layout_marginTop="32dp"/>
     <LinearLayout
         android:layout_width="match_parent"
@@ -97,7 +98,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Admin access:"
-            android:textColor="#169976"
+            android:textColor="#fff"
             android:textSize="14sp"
             android:layout_marginTop="13dp"
             android:gravity="center"/>
@@ -108,7 +109,7 @@
             android:text="Admin"
             android:textColor="#000000"
             android:layout_marginLeft="10dp"
-            android:backgroundTint="#1DCD9F"
+            android:backgroundTint="#FBB054"
             android:layout_marginTop="13dp"
             android:layout_marginBottom="3dp"
 

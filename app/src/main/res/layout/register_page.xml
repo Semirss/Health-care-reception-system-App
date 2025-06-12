@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:padding="16dp"
     android:gravity="center"
-    android:background="@drawable/landback2">
+    android:background="@drawable/fnfn">
 
     <TextView
         android:layout_width="wrap_content"
@@ -77,8 +77,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Register"
-        android:backgroundTint="#4CAF50"
-        android:textColor="@color/white"
+        android:backgroundTint="#FBB054"
+        android:textColor="@color/black"
         android:textColorHint="@color/white"        android:padding="12dp"
         android:layout_marginBottom="16dp" />
 
@@ -87,7 +87,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Already have an account? Login"
-        android:textColor="#2196F3"
+        android:textColor="#FBB054"
         android:textSize="16sp"
         android:clickable="true"
         android:focusable="true" />

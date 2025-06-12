@@ -15,17 +15,15 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Card ID -->
         <TextView
             android:id="@+id/cardIdTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Card ID: Unknown"
-            android:textColor="#1DCD9F"
+            android:textColor="#FBB054"
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <!-- Appointment Date -->
         <TextView
             android:id="@+id/dateTextView"
             android:layout_width="wrap_content"
@@ -35,7 +33,6 @@
             android:textSize="16sp"
             android:layout_marginTop="8dp" />
 
-        <!-- Status -->
         <TextView
             android:id="@+id/statusTextView"
             android:layout_width="wrap_content"
@@ -45,7 +42,6 @@
             android:textSize="16sp"
             android:layout_marginTop="4dp" />
 
-        <!-- Button Section -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -54,7 +50,6 @@
             android:gravity="end"
             android:weightSum="2">
 
-            <!-- Cancel Button -->
             <Button
                 android:id="@+id/cancelButton"
                 android:layout_width="0dp"
@@ -67,15 +62,14 @@
                 android:minHeight="48dp"
                 android:paddingVertical="8dp"/>
 
-            <!-- See Details Button -->
             <Button
                 android:id="@+id/seeDetailsButton"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_weight="1"
                 android:text="See Details"
-                android:textColor="#FFFFFF"
-                android:backgroundTint="#1976D2"
+                android:textColor="#000"
+                android:backgroundTint="#FBB054"
                 android:layout_marginStart="8dp"
                 android:minHeight="48dp"
                 android:paddingVertical="8dp"/>

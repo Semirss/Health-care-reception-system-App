@@ -156,14 +156,15 @@
             android:textSize="16sp"
             android:textColor="@color/black"
             android:backgroundTint="@android:color/transparent"
-            style="@style/Widget.MaterialComponents.Button.TextButton" /> <Button
+            style="@style/Widget.MaterialComponents.Button.TextButton" />
+        <Button
         android:id="@+id/btn_update"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Update Record" android:textAllCaps="false"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:backgroundTint="@color/black" android:textColor="@android:color/white"
+        android:backgroundTint="#FBB054" android:textColor="@android:color/white"
         android:elevation="4dp"
         android:stateListAnimator="@null"
         style="@style/Widget.MaterialComponents.Button.UnelevatedButton" /> </LinearLayout>
