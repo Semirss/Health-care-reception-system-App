@@ -20,7 +20,7 @@
         android:shadowRadius="8"
         android:text="Health Gate"
         android:textAlignment="center"
-        android:textColor="#FBB054"
+        android:textColor="#Ffff"
         android:textSize="48sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
