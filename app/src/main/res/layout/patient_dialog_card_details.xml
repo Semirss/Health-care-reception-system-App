@@ -6,8 +6,7 @@
     android:layout_height="wrap_content"
     android:padding="16dp"
     android:layout_margin="5dp"
-    android:background="@drawable/login_card_border"
-
+    android:background="@color/black"
   >
 
     <TextView
